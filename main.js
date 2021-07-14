@@ -2,30 +2,50 @@
 import {Node} from './node.js'
 
 
-//State variables
+/** State variables */
 const gridHeight = 20;
 const gridWidth = 40;
 
 var grid = null;
-var pathFound = false;
+var currentNode = 0; //To track which node is currently being placed
+//0: start node, 1: goal node, 2: walls
+var pathFound = false; //Highlight the shortest path when found
+var startId = null; //The Id of the start node in the grid
+var goalId = null; //The Id key of the goal node in the grid
+var colorDictionary = {"start":"green", "goal":"red", "unvisited":"white", "visited": "blue", "wall":"black"} //Maps node types to colors
 
-function changeColor() {
-    this.style.backgroundColor = Math.floor(Math.random()*16777215).toString(16);;
-}   
-
+function handleNodeClick(id){
+    var id = this.id
+    var idIndex = id.split("-");
+    if (currentNode == 0){
+        startId = id;
+        grid[idIndex[0]][idIndex[1]].type = "start";
+        currentNode = 1
+    }
+    else if (currentNode == 1){
+        goalId = id;
+        grid[idIndex[0]][idIndex[1]].type = "goal";
+        currentNode = 2
+    }
+    else{
+        var nodeType = grid[idIndex[0]][idIndex[1]].type
+        grid[idIndex[0]][idIndex[1]].type = nodeType == "wall" ? "unvisited" : "wall"
+    }
+    var cell = document.getElementById(id);
+    cell.style.backgroundColor = colorDictionary[grid[idIndex[0]][idIndex[1]].type]
+}
 
 //Dynamically generate the rows and columns of the table in HTML
 function htmlGrid(){
     var table = document.getElementById("grid")
-    for(var a = 0; a<gridHeight; a++)
-    {
+    for(var a = 0; a<gridHeight; a++){
         var row = table.insertRow(table.rows.length)
-        for(var b = 0; b<gridWidth; b++)
-        {
-            var cell = row.insertCell(b)
-            cell.innerHTML = b;
-            cell.addEventListener("click", changeColor)
-            cell.style.cursor = "pointer"
+        for(var b = 0; b<gridWidth; b++){
+            var cell = row.insertCell(b);
+            cell.innerHTML = b; //Filler. Delete after adding css
+            cell.id = `${a}-${b}`;
+            cell.style.cursor = "pointer";
+            cell.addEventListener("click", handleNodeClick);
         }
     }
 }
@@ -37,17 +57,14 @@ function createGrid(grid){
         grid.push([])
         for(var b = 0; b<gridWidth; b++)
         {
-            grid[a].push(new Node("unvisited"))
+            var id = `${a}-${b}`;
+            grid[a].push(new Node(id, "unvisited"));
         }
     }
-    console.log(grid.length)
     return grid
 }
 
-/** Executed Code */
 
+/** Executed Code */
 htmlGrid()
 grid = createGrid([])
-
-
-
