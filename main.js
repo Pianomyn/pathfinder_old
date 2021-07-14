@@ -6,7 +6,7 @@ import {Node} from './node.js'
 const gridHeight = 20;
 const gridWidth = 40;
 
-var grid = [];
+var grid = null;
 var pathFound = false;
 
 function changeColor() {
@@ -25,6 +25,7 @@ function htmlGrid(){
             var cell = row.insertCell(b)
             cell.innerHTML = b;
             cell.addEventListener("click", changeColor)
+            cell.style.cursor = "pointer"
         }
     }
 }
@@ -46,6 +47,7 @@ function createGrid(grid){
 /** Executed Code */
 
 htmlGrid()
+grid = createGrid([])
 
 
 
