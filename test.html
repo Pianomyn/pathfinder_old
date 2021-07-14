@@ -1,0 +1,89 @@
+<html>
+<br/><br/></p>
+<table id="my_table" align="center" cellspacing="0" cellpadding="0" border="0">
+ <tr>
+<td>Name</td>
+<td>Age</td>
+<td>Sex</td>
+</tr>
+
+ </table>
+<p></center></p>
+<script type="text/javascript" language="javascript">
+
+ function appendRow(){
+
+
+var names = ["Paul", "Mike", "Linda"];
+var ages = ["16", "23", "44"];
+var male_female = ["M", "M", "F"];
+var tbl = document.getElementById('my_table'); // table reference
+// append table row
+var id;
+var z=1;
+for(k=0;k<names.length;k++){    
+var row = tbl.insertRow(tbl.rows.length);
+
+
+    var j = tbl.rows.length - 2;
+    for (var i=0;i<tbl.rows[0].cells.length;i++) {
+        id=z++;
+          var cell_text = '';
+          if (i == 0) {
+                 cell_text = names[j];
+          } else if (i == 1) {
+                 cell_text = ages[j];
+          } else if (i == 2) {
+                 cell_text = male_female[j];
+          }
+        createCell(id, row.insertCell(i), cell_text, 'row');
+
+    }
+
+
+  }
+
+
+}
+
+function createCell(id, cell, text, style){
+
+var div = document.createElement('div'); // create DIV element
+
+var txt = document.createTextNode(text); // create text node
+if(id % 3 == 0)
+{
+          cell.setAttribute('onclick', 'alert("hello")');    //for testing purposes
+      cell.addEventListener("click", clickCell, false);
+}
+div.appendChild(txt);                    // append text node to the DIV
+div.setAttribute('class', style);        // set DIV class attribute
+div.setAttribute('className', style);    // set DIV class attribute for IE (?!)
+cell.appendChild(div);            // append DIV to the table cell
+}
+
+function clickCell(e) {
+    // clear the background of all rows
+    var rows = document.getElementById('my_table').rows;
+    for(var i = 0; i < rows.length; i++) {
+        rows[i].style.backgroundColor = '';
+    }
+    // set background of clicked row
+    this.style.backgroundColor = 'purple';
+}
+    
+
+
+
+
+
+ </script>
+<BODY onload="appendRow()">
+
+<style>
+table#my_table{border-collapse:collapse;}
+ table#my_table td{width:50px;height:27px;border:1px solid #D3D3D3;font-size:10pt;text-align:center;padding:0;}
+  .append_row{background-color:#FFD6D6;border:1px #ccc solid;}
+ </style>
+ </body>
+ </html> 
