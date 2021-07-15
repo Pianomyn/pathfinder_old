@@ -4,7 +4,7 @@ export class Node{
     constructor(id, type){
         this.id = id;
         this.type = type;
-        this.neighbours = [];
+        this.neighbors = [];
         this.previous = null;
     }
 
@@ -14,14 +14,14 @@ export class Node{
     }
 
     getNeighbours(){
-        return this.neighbours;
+        return this.neighbors;
     }
 
     getPrevious(){
         return this.previous;
     }
 
-    addNeighbour(neighbour){
-        this.neighbours.push(neighbour);
+    addNeighbour(neighbor){
+        this.neighbors.push(neighbor);
     }
 }
