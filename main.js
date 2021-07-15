@@ -2,9 +2,8 @@
 import { Node } from "./node.js";
 
 /** State variables */
-const gridHeight = 20;
-const gridWidth = 40;
-
+const gridHeight = 30;
+const gridWidth = 35;
 var grid = null;
 var startPlaced = false; //Tracks if a start node needs to be placed
 var goalPlaced = false; //Tracks if a goal node needs to be placed

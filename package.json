@@ -1,0 +1,14 @@
+{
+    "name": "pathfinder",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "author": "",
+    "license": "MIT",
+    "scripts":{
+        "start": "live-server"
+    },
+    "dependencies": {
+        "live-server": "^1.2.1"
+    }
+}
