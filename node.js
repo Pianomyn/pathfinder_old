@@ -8,8 +8,7 @@ export class Node{
         this.previous = null;
     }
 
-    getType()
-    {
+    getType(){
         return this.type;
     }
 
