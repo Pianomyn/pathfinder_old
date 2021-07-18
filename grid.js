@@ -28,6 +28,8 @@ export class Grid{
 
     //Given the id of a node in string form, return the coordinates of that node in an array
     getCoords(id){
+        if(id==null)
+            return null
         //console.log(id.split("-").map(x => parseInt(x)))
         return id.split("-").map(function(x) {
             return parseInt(x,10);})

@@ -54,13 +54,13 @@ function handleNodeClick() {
         }
     } else {
         if (grid.getNode(id).type == "start") {
-            //grid.startId = null;
             startPlaced = false;
             grid.setStartId(null);
+            grid.getNode(id).type = "unvisited"
         } else if (grid.getNode(id).type == "goal") {
-            //grid.goalId = null;
             goalPlaced = false;
             grid.setGoalId(null);
+            grid.getNode(id).type = "unvisited"
         }
         grid.getNode(id).type = "unvisited";
     }
