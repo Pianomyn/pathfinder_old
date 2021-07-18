@@ -4,23 +4,31 @@ export class Node{
     constructor(id, type){
         this.id = id;
         this.type = type;
-        this.neighbors = [];
-        this.previous = null;
+        this.neighbors = []; // An array of arrays where each array contains the row and column coordinate of a neighbour
+        this.previous = []; //The row and column coordinate of the node that added this node to the fringe
     }
 
     getType(){
         return this.type;
     }
 
-    getNeighbours(){
+    setType(type){
+        this.type = type;
+    }
+
+    getNeighbors(){
         return this.neighbors;
+    }
+
+    getNeighbor(i){
+        return this.neighbors[i];
+    }
+
+    addNeighbor(neighbor){
+        this.neighbors.push(neighbor);
     }
 
     getPrevious(){
         return this.previous;
-    }
-
-    addNeighbour(neighbor){
-        this.neighbors.push(neighbor);
     }
 }

@@ -1,11 +1,22 @@
 <head>
-  <title>Pathfinder Visualiser</title>
-  <h1>Pathfinder Visualiser</h1>
-<!--Can add .css dependencies with link tag-->
-<link rel="stylesheet" href="index.css"></link>
+    <title>Pathfinder Visualiser</title>
+    <h1>Pathfinder Visualiser</h1>
+    <link rel="stylesheet" href="./css/index.css" />
 </head>
 
 <body>
-  <table id="grid" border="1" cellspacing="0" class = noSelect></table>
-  <script type="module" src="./main.js"></script>
+    <div class="horizontal">
+        <table id="grid" border="1" cellspacing="0" class="noSelect"></table>
+        <div id="options">
+            <select id="algorithmSelect">
+                <option value="bfs">BFS</option>
+                <option value="greedy">Greedy</option>
+                <option value="hillClimbing">Hill Climbing</option>
+
+            </select>
+            <button id="startButton">Start</button>
+        </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
 </body>
