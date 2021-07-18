@@ -6,7 +6,7 @@ const gridHeight = 30;
 const gridWidth = 35;
 var startPlaced = false; //Tracks if a start node needs to be placed
 var goalPlaced = false; //Tracks if a goal node needs to be placed
-var algorithmStarted = false; //Once the algorithm starts, clicks on the grid are ignored
+var canPlaceNodes = true //Disable when algorithm is running. Can also disable for adding weights?
 var goalFound = false; //Highlight the shortest path when found
 var colorDictionary = {
     start: "lightgreen",
@@ -35,7 +35,7 @@ function htmlGrid() {
 
 //Places or replaces a single start, goal or wall node
 function handleNodeClick() {
-    if (algorithmStarted) return;
+    if (!canPlaceNodes) return;
 
     var id = this.id;
     if (grid.getNode(id).type == "unvisited") {
@@ -79,7 +79,7 @@ htmlGrid();
 var btn = document.getElementById("startButton");
 btn.onclick = async function () {
     if (goalPlaced && startPlaced) {
-        algorithmStarted = true;
+        canPlaceNodes = false;
         //Run the algorithm
         var algorithm = document.getElementById("algorithmSelect").value;
         if (algorithm == "bfs") {
