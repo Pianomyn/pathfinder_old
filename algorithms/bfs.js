@@ -18,7 +18,6 @@ export class BFS {
         this.current = current;
     }
 
-
     findGoal() {
         this.expanded = [];
         this.fringe = [this.grid.startId];
@@ -26,7 +25,7 @@ export class BFS {
         while (this.fringe.length > 0) {
             //Expand a node from the fringe if possible
             this.current = this.fringe.shift();
-            var currentNode = this.grid.grid[this.current[0]][this.current[1]];
+            var currentNode = this.grid.getNode(this.current);
             this.expanded.push(this.current);
             if (
                 this.current[0] == this.grid.goalId[0] &&
@@ -35,63 +34,60 @@ export class BFS {
                 break;
             }
             if (
-                this.grid.grid[this.current[0]][this.current[1]].type !=
-                    "start" &&
-                this.grid.grid[this.current[0]][this.current[1]].type != "goal"
+                this.grid.getNode(this.current).type != "start" &&
+                this.grid.getNode(this.current).type != "goal"
             )
-                this.grid.grid[this.current[0]][this.current[1]].type =
-                    "visited";
+                this.grid.getNode(this.current).type = "visited";
 
             //Update the previous value for each of its neighbors
             //And add each non-wall neighbor to the fringe
             for (var a = 0; a < currentNode.getNeighbors().length; a++) {
                 var neighbor = currentNode.getNeighbor(a);
                 if (
-                    this.grid.grid[neighbor[0]][neighbor[1]].type != "wall" &&
-                    this.grid.grid[neighbor[0]][neighbor[1]].type != "visited"
+                    this.grid.getNode(neighbor).type != "wall" &&
+                    this.grid.getNode(neighbor).type != "visited"
                 ) {
                     var addToFringe = true;
-                    for(var b = 0; b<this.fringe.length; b++)
-                    {
-                        if(this.fringe[b][0]==neighbor[0] && this.fringe[b][1]==neighbor[1]){
+                    for (var b = 0; b < this.fringe.length; b++) {
+                        if (
+                            this.fringe[b][0] == neighbor[0] &&
+                            this.fringe[b][1] == neighbor[1]
+                        ) {
                             addToFringe = false;
                         }
                     }
-                    if(addToFringe){
-                        this.grid.grid[neighbor[0]][neighbor[1]].previous=
-                            this.current
-                        
+                    if (addToFringe) {
+                        this.grid.grid[neighbor[0]][neighbor[1]].previous =
+                            this.current;
+
                         this.fringe.push(neighbor);
                     }
-                    
-                    
                 }
             }
         }
-        console.log('reached')
         return this.expanded;
     }
 
     getPath() {
         var path = [];
-        var pathNode = this.grid.getNode(`${this.grid.goalId[0]}-${this.grid.goalId[1]}`);
-        console.log('pathnode: ', pathNode.previous)
-        
+        var pathNode = this.grid.getNode(
+            `${this.grid.goalId[0]}-${this.grid.goalId[1]}`
+        );
+
         var pathCount = 0;
         while (pathNode.previous.length == 2) {
-            if(pathCount >30){
+            if (pathCount > 30) {
                 //break
             }
             var row = pathNode.previous[0];
             var col = pathNode.previous[1];
             pathNode = this.grid.grid[row][col];
-            console.log("X: ",row,"Y: ",col,pathNode.previous)
-            if(pathNode.type == "start"){
-                break
+            if (pathNode.type == "start") {
+                break;
             }
-            path.push([row, col])
+            path.push([row, col]);
             pathCount++;
         }
-        return path
+        return path;
     }
 }

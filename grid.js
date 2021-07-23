@@ -28,17 +28,26 @@ export class Grid{
 
     //Given the id of a node in string form, return the coordinates of that node in an array
     getCoords(id){
-        if(id==null)
+        if (id ==null)
             return null
-        //console.log(id.split("-").map(x => parseInt(x)))
+        
         return id.split("-").map(function(x) {
             return parseInt(x,10);})
     }
     
     //Given the id of a node in string form, return the node in the logical grid
     getNode(id){
-        var coords = this.getCoords(id)
-        //console.log(coords)
+        if (id ==null)
+            return null
+        
+        var coords;
+        if(typeof id == "string"){
+            coords = this.getCoords(id)
+        }
+        else{
+            coords = id
+        }
+        
         return this.grid[coords[0]][coords[1]];
     }
 

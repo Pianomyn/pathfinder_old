@@ -7,7 +7,6 @@ const gridWidth = 35;
 var startPlaced = false; //Tracks if a start node needs to be placed
 var goalPlaced = false; //Tracks if a goal node needs to be placed
 var canPlaceNodes = true //Disable when algorithm is running. Can also disable for adding weights?
-var goalFound = false; //Highlight the shortest path when found
 var colorDictionary = {
     start: "lightgreen",
     goal: "lightcoral",
@@ -55,12 +54,14 @@ function handleNodeClick() {
     } else {
         if (grid.getNode(id).type == "start") {
             startPlaced = false;
-            grid.setStartId(null);
             grid.getNode(id).type = "unvisited"
+            grid.setStartId(null);
+            
         } else if (grid.getNode(id).type == "goal") {
             goalPlaced = false;
-            grid.setGoalId(null);
             grid.getNode(id).type = "unvisited"
+            grid.setGoalId(null);
+            
         }
         grid.getNode(id).type = "unvisited";
     }
@@ -83,7 +84,6 @@ btn.onclick = async function () {
         //Run the algorithm
         var algorithm = document.getElementById("algorithmSelect").value;
         if (algorithm == "bfs") {
-            console.log(grid.grid[grid.startId[0]][grid.startId[1]].getNeighbors())
             var bfs = new BFS(grid);
             var expandedCoords = bfs.findGoal();
 
@@ -100,24 +100,18 @@ btn.onclick = async function () {
                         resolve();
                     }, 3)
                 );
+
                 cell.style.backgroundColor =
                     colorDictionary[grid.getNode(id).type];
             }
-            console.log("reached1.5")
             //Highlight shortest path
             var path = bfs.getPath()
-            console.log("Path length: ",path.length)
-            console.log(path)
-
-            console.log("reached2")
             
             for(var a = 0; a<path.length; a++){
                 var pathId = `${path[a][0]}-${path[a][1]}`
-                console.log(pathId)
                 var pathCell = document.getElementById(pathId)
                 pathCell.style.backgroundColor = "yellow"
             }
-            console.log("reached3")
         }
     }
 };
