@@ -2,8 +2,8 @@ import { Grid } from "./grid.js";
 import { BFS } from "./algorithms/bfs.js";
 
 /** State variables */
-const gridHeight = 30;
-const gridWidth = 35;
+const gridHeight = 25;
+const gridWidth = 40;
 var startPlaced = false; //Tracks if a start node needs to be placed
 var goalPlaced = false; //Tracks if a goal node needs to be placed
 var canPlaceNodes = true //Disable when algorithm is running. Can also disable for adding weights?
@@ -23,8 +23,9 @@ function htmlGrid() {
         var row = table.insertRow(table.rows.length);
         for (var b = 0; b < gridWidth; b++) {
             var cell = row.insertCell(b);
-            cell.innerHTML = count; //Filler. Delete after adding css class
+            //cell.innerHTML = count; //Filler. Delete after adding css class
             count++; //Filler. Delete after adding css class
+            cell.classList.add("tableCell")
             cell.id = `${a}-${b}`;
             cell.style.cursor = "pointer";
             cell.addEventListener("click", handleNodeClick);
@@ -81,18 +82,15 @@ var btn = document.getElementById("startButton");
 btn.onclick = async function () {
     if (goalPlaced && startPlaced) {
         canPlaceNodes = false;
-        //Run the algorithm
         var algorithm = document.getElementById("algorithmSelect").value;
+        //BFS
         if (algorithm == "bfs") {
             var bfs = new BFS(grid);
             var expandedCoords = bfs.findGoal();
-
             var a;
-
-            //Highlight all nodes searched
+           //Highlight all nodes searched
             for (a = 0; a < expandedCoords.length; a++) {
                 var id = `${expandedCoords[a][0]}-${expandedCoords[a][1]}`;
-
                 var cell = document.getElementById(id);
                 cell.class = "delay";
                 await new Promise((resolve) =>
@@ -112,6 +110,10 @@ btn.onclick = async function () {
                 var pathCell = document.getElementById(pathId)
                 pathCell.style.backgroundColor = "yellow"
             }
+        }
+        //a star
+        if(algorithm=="aStar"){
+
         }
     }
 };

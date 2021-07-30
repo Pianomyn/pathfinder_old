@@ -6,6 +6,8 @@ export class Node{
         this.type = type;
         this.neighbors = []; // An array of arrays where each array contains the row and column coordinate of a neighbour
         this.previous = []; //The row and column coordinate of the node that added this node to the fringe
+        this.distance_travelled = 0;
+        this.heuristic = 0;
     }
 
     getType(){

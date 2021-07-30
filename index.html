@@ -4,17 +4,16 @@
     <link rel="stylesheet" href="./css/index.css" />
 </head>
 
-<body>
-    <div class="horizontal">
-        <table id="grid" border="1" cellspacing="0" class="noSelect"></table>
-        <div id="options">
-            <select id="algorithmSelect">
-                <option value="bfs">BFS</option>
-
-            </select>
-            <button id="startButton">Start</button>
-        </div>
+<div class="horizontal" >
+    <div id = "gridContainer">
+        <table id="grid" table border="1" cellspacing="0" class="grid"></table>
     </div>
+    <div id="options">
+        <select id="algorithmSelect">
+            <option value="bfs">BFS</option>
+        </select>
+        <button id="startButton">Start</button>
+    </div>
+</div>
 
-    <script type="module" src="./main.js"></script>
-</body>
+<script type="module" src="./main.js"></script>

@@ -5,7 +5,7 @@ export class BFS {
     //Start, current, goal and each element of walls is stored as an array of strings of the form "x-y"
     constructor(grid) {
         this.grid = grid;
-        this.current = null; //In coordinate form
+        this.current = null; //The current node in coordinate form
         this.fringe = []; //List of coordinates
         this.expanded = []; // List of coordinates
     }
