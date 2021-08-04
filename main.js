@@ -6,7 +6,7 @@ const gridHeight = 25;
 const gridWidth = 40;
 var startPlaced = false; //Tracks if a start node needs to be placed
 var goalPlaced = false; //Tracks if a goal node needs to be placed
-var canPlaceNodes = true //Disable when algorithm is running. Can also disable for adding weights?
+var canPlaceNodes = true; //Disable when algorithm is running. Can also disable for adding weights?
 var colorDictionary = {
     start: "lightgreen",
     goal: "lightcoral",
@@ -25,12 +25,28 @@ function htmlGrid() {
             var cell = row.insertCell(b);
             //cell.innerHTML = count; //Filler. Delete after adding css class
             count++; //Filler. Delete after adding css class
-            cell.classList.add("tableCell")
+            cell.classList.add("tableCell");
             cell.id = `${a}-${b}`;
             cell.style.cursor = "pointer";
             cell.addEventListener("click", handleNodeClick);
         }
     }
+}
+
+function resetPath(height, width) {
+    for (var r = 0; r < height; r++) {
+        for (var c = 0; c < width; c++) {
+            var htmlCell = document.getElementById(`${r}-${c}`);
+            var cell = grid.getNode(`${r}-${c}`);
+            if (cell.type == "visited") {
+                cell.type = "unvisited";
+                var id = `${r}-${c}`;
+                htmlCell.style.backgroundColor =
+                    colorDictionary[grid.getNode(id).type];
+            }
+        }
+    }
+    canPlaceNodes = true;
 }
 
 //Places or replaces a single start, goal or wall node
@@ -55,14 +71,12 @@ function handleNodeClick() {
     } else {
         if (grid.getNode(id).type == "start") {
             startPlaced = false;
-            grid.getNode(id).type = "unvisited"
+            grid.getNode(id).type = "unvisited";
             grid.setStartId(null);
-            
         } else if (grid.getNode(id).type == "goal") {
             goalPlaced = false;
-            grid.getNode(id).type = "unvisited"
+            grid.getNode(id).type = "unvisited";
             grid.setGoalId(null);
-            
         }
         grid.getNode(id).type = "unvisited";
     }
@@ -79,6 +93,14 @@ htmlGrid();
 
 //Logic for start button
 var btn = document.getElementById("startButton");
+var resetAll = document.getElementById("resetAllButton");
+resetAll.onclick = function () {
+    window.location.reload();
+};
+var reset = document.getElementById("resetButton");
+reset.onclick = function () {
+    resetPath(gridHeight, gridWidth);
+};
 btn.onclick = async function () {
     if (goalPlaced && startPlaced) {
         canPlaceNodes = false;
@@ -88,7 +110,7 @@ btn.onclick = async function () {
             var bfs = new BFS(grid);
             var expandedCoords = bfs.findGoal();
             var a;
-           //Highlight all nodes searched
+            //Highlight all nodes searched
             for (a = 0; a < expandedCoords.length; a++) {
                 var id = `${expandedCoords[a][0]}-${expandedCoords[a][1]}`;
                 var cell = document.getElementById(id);
@@ -103,17 +125,16 @@ btn.onclick = async function () {
                     colorDictionary[grid.getNode(id).type];
             }
             //Highlight shortest path
-            var path = bfs.getPath()
-            
-            for(var a = 0; a<path.length; a++){
-                var pathId = `${path[a][0]}-${path[a][1]}`
-                var pathCell = document.getElementById(pathId)
-                pathCell.style.backgroundColor = "yellow"
+            var path = bfs.getPath();
+
+            for (var a = 0; a < path.length; a++) {
+                var pathId = `${path[a][0]}-${path[a][1]}`;
+                var pathCell = document.getElementById(pathId);
+                pathCell.style.backgroundColor = "yellow";
             }
         }
         //a star
-        if(algorithm=="aStar"){
-
+        if (algorithm == "aStar") {
         }
     }
 };
