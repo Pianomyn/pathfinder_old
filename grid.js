@@ -59,7 +59,7 @@ export class Grid {
         var endCell = this.getNode(endId);
 
         return (
-            startCell.distance_travelled + endCell.weight + endCell.heuristic
+            startCell.distanceTravelled + endCell.weight + endCell.heuristic
         );
     }
 

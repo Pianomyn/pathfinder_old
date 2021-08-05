@@ -41,6 +41,7 @@ function resetPath(height, width) {
             var cell = grid.getNode(`${r}-${c}`);
             if (cell.type == "visited") {
                 cell.type = "unvisited";
+                cell.distanceTravelled = 0;
                 var id = `${r}-${c}`;
                 htmlCell.style.backgroundColor =
                     colorDictionary[grid.getNode(id).type];
