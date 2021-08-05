@@ -1,5 +1,6 @@
 import { Grid } from "./grid.js";
 import { BFS } from "./algorithms/bfs.js";
+import { ASTAR } from "./algorithms/aStar.js";
 
 /** State variables */
 const gridHeight = 25;
@@ -94,47 +95,52 @@ htmlGrid();
 //Logic for start button
 var btn = document.getElementById("startButton");
 var resetAll = document.getElementById("resetAllButton");
-resetAll.onclick = function () {
+resetAll.onclick = () => {
     window.location.reload();
 };
 var reset = document.getElementById("resetButton");
-reset.onclick = function () {
+reset.onclick = () => {
     resetPath(gridHeight, gridWidth);
 };
-btn.onclick = async function () {
+btn.onclick = async () => {
     if (goalPlaced && startPlaced) {
         canPlaceNodes = false;
         var algorithm = document.getElementById("algorithmSelect").value;
+        var expandedCoords = [];
+        var path = [];
+        var delay = 0;
         //BFS
         if (algorithm == "bfs") {
             var bfs = new BFS(grid);
-            var expandedCoords = bfs.findGoal();
-            var a;
-            //Highlight all nodes searched
-            for (a = 0; a < expandedCoords.length; a++) {
-                var id = `${expandedCoords[a][0]}-${expandedCoords[a][1]}`;
-                var cell = document.getElementById(id);
-                cell.class = "delay";
-                await new Promise((resolve) =>
-                    setTimeout(() => {
-                        resolve();
-                    }, 3)
-                );
-
-                cell.style.backgroundColor =
-                    colorDictionary[grid.getNode(id).type];
-            }
-            //Highlight shortest path
-            var path = bfs.getPath();
-
-            for (var a = 0; a < path.length; a++) {
-                var pathId = `${path[a][0]}-${path[a][1]}`;
-                var pathCell = document.getElementById(pathId);
-                pathCell.style.backgroundColor = "yellow";
-            }
+            expandedCoords = bfs.findGoal();
+            path = bfs.getPath();
+            delay = 3;
         }
         //a star
         if (algorithm == "aStar") {
+            var aStar = new ASTAR(grid);
+            expandedCoords = aStar.findGoal();
+            path = aStar.getPath();
+            delay = 40;
+        }
+
+        //Highlight all nodes searched
+        for (var a = 0; a < expandedCoords.length; a++) {
+            var id = `${expandedCoords[a][0]}-${expandedCoords[a][1]}`;
+            var cell = document.getElementById(id);
+            cell.class = "delay";
+            await new Promise((resolve) =>
+                setTimeout(() => {
+                    resolve();
+                }, delay)
+            );
+
+            cell.style.backgroundColor = colorDictionary[grid.getNode(id).type];
+        }
+        for (var a = 0; a < path.length; a++) {
+            var pathId = `${path[a][0]}-${path[a][1]}`;
+            var pathCell = document.getElementById(pathId);
+            pathCell.style.backgroundColor = "yellow";
         }
     }
 };
