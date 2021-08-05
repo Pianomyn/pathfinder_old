@@ -1,13 +1,14 @@
 import { Grid } from "./grid.js";
 import { BFS } from "./algorithms/bfs.js";
-import { ASTAR } from "./algorithms/aStar.js";
+import { GREEDY } from "./algorithms/greedy.js" 
+import { ASTAR } from "./algorithms/aStar.js" 
 
 /** State variables */
 const gridHeight = 25;
 const gridWidth = 40;
 var startPlaced = false; //Tracks if a start node needs to be placed
 var goalPlaced = false; //Tracks if a goal node needs to be placed
-var canPlaceNodes = true; //Disable when algorithm is running. Can also disable for adding weights?
+var canInteract = true; //Disable when algorithm is running. Can also disable for adding weights?
 var colorDictionary = {
     start: "lightgreen",
     goal: "lightcoral",
@@ -35,6 +36,7 @@ function htmlGrid() {
 }
 
 function resetPath(height, width) {
+    if (!canInteract) return;
     for (var r = 0; r < height; r++) {
         for (var c = 0; c < width; c++) {
             var htmlCell = document.getElementById(`${r}-${c}`);
@@ -44,16 +46,15 @@ function resetPath(height, width) {
                 cell.distanceTravelled = 0;
                 var id = `${r}-${c}`;
                 htmlCell.style.backgroundColor =
-                    colorDictionary[grid.getNode(id).type];
+                    colorDictionary["unvisited"];
             }
         }
     }
-    canPlaceNodes = true;
 }
 
 //Places or replaces a single start, goal or wall node
 function handleNodeClick() {
-    if (!canPlaceNodes) return;
+    if (!canInteract) return;
 
     var id = this.id;
     if (grid.getNode(id).type == "unvisited") {
@@ -94,7 +95,7 @@ grid.setNeighbors();
 htmlGrid();
 
 //Logic for start button
-var btn = document.getElementById("startButton");
+var startButton = document.getElementById("startButton");
 var resetAll = document.getElementById("resetAllButton");
 resetAll.onclick = () => {
     window.location.reload();
@@ -103,27 +104,36 @@ var reset = document.getElementById("resetButton");
 reset.onclick = () => {
     resetPath(gridHeight, gridWidth);
 };
-btn.onclick = async () => {
-    if (goalPlaced && startPlaced) {
-        canPlaceNodes = false;
+startButton.onclick = async () => {
+    if (goalPlaced && startPlaced && canInteract) {
+        canInteract = false;
         var algorithm = document.getElementById("algorithmSelect").value;
         var expandedCoords = [];
         var path = [];
         var delay = 0;
         //BFS
         if (algorithm == "bfs") {
-            var bfs = new BFS(grid);
-            expandedCoords = bfs.findGoal();
-            path = bfs.getPath();
+            algorithm = new BFS(grid);
+            expandedCoords = algorithm.findGoal();
+            path = algorithm.getPath();
             delay = 3;
         }
-        //a star
-        if (algorithm == "aStar") {
-            var aStar = new ASTAR(grid);
-            expandedCoords = aStar.findGoal();
-            path = aStar.getPath();
+        //Greed
+        if (algorithm =="greedy"){
+            algorithm = new GREEDY(grid);
+            expandedCoords = algorithm.findGoal();
+            path = algorithm.getPath();
             delay = 40;
         }
+        //A Star
+        if (algorithm == "aStar") {
+            alglorithm = new ASTAR(grid);
+            expandedCoords = algorithm.findGoal();
+            path = algorithm.getPath();
+            delay = 40;
+        }
+        
+
 
         //Highlight all nodes searched
         for (var a = 0; a < expandedCoords.length; a++) {
@@ -143,5 +153,6 @@ btn.onclick = async () => {
             var pathCell = document.getElementById(pathId);
             pathCell.style.backgroundColor = "yellow";
         }
+        canInteract = true;
     }
 };

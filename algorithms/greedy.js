@@ -1,7 +1,7 @@
 import { Node } from "../node.js";
 import { Grid } from "../grid.js";
 
-export class ASTAR {
+export class GREEDY {
     constructor(grid) {
         this.grid = grid;
         for(var a = 0; a < grid.gridHeight; a++){
