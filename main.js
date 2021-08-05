@@ -4,8 +4,8 @@ import { GREEDY } from "./algorithms/greedy.js"
 import { ASTAR } from "./algorithms/aStar.js" 
 
 /** State variables */
-const gridHeight = 25;
-const gridWidth = 40;
+const gridHeight = 24;
+const gridWidth = 60;
 var startPlaced = false; //Tracks if a start node needs to be placed
 var goalPlaced = false; //Tracks if a goal node needs to be placed
 var canInteract = true; //Disable when algorithm is running. Can also disable for adding weights?

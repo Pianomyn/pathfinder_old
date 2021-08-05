@@ -1,23 +1,26 @@
 <head>
     <title>Pathfinder Visualiser</title>
-    <h1>Pathfinder Visualiser</h1>
     <link rel="stylesheet" href="./css/index.css" />
 </head>
 
-<div class="horizontal" >
+
+<body>
+    <div class="vertical-align" >
+        <h2 class="">Pathfinder Visualiser</h1>
+        <div class = " options" id="options">
+            <select id="algorithmSelect">
+                <option value="bfs">BFS</option>
+                <option value="greedy">Greedy</option>
+                <option value="aStar">A*</option>
+            </select>
+            <button id="startButton">Start</button>
+            <button id="resetAllButton">Reset All</button>
+            <button id="resetButton">Reset</button>
+        </div>
+    </div>
     <div id = "gridContainer">
         <table id="grid" table border="1" cellspacing="0" class="grid"></table>
     </div>
-    <div id="options">
-        <select id="algorithmSelect">
-            <option value="bfs">BFS</option>
-            <option value="greedy">Greedy</option>
-            <option value="aStar">A*</option>
-        </select>
-        <button id="startButton">Start</button>
-        <button id="resetAllButton">Reset All</button>
-        <button id="resetButton">Reset</button>
-    </div>
-</div>
+</body>
 
 <script type="module" src="./main.js"></script>

@@ -2,8 +2,16 @@
     border: 1px solid rgb(0, 0, 0);
 }
 
-.horizontal{
-    display:flex
+.heading_options{
+    display:block;
+}
+
+
+.vertical-align{
+    text-align: center;
+}
+.options{
+    margin-bottom:15px
 }
 
 .grid{
