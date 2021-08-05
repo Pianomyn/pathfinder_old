@@ -51,16 +51,20 @@ export class Grid {
     //Takes targetId in string form
     calculateAstarHeuristic(targetId) {
         var id = this.getCoords(targetId);
-        return Math.abs(this.goalId[0] - id[0]) + Math.abs(this.goalId[1] - id[1]);
+        return (
+            Math.abs(this.goalId[0] - id[0]) + Math.abs(this.goalId[1] - id[1])
+        );
+    }
+
+    getHeuristic(targetId) {
+        return this.getNode(targetId).heuristic;
     }
 
     getDistance(startId, endId) {
         var startCell = this.getNode(startId);
         var endCell = this.getNode(endId);
 
-        return (
-            startCell.distanceTravelled + endCell.weight + endCell.heuristic
-        );
+        return startCell.distanceTravelled + endCell.weight + endCell.heuristic;
     }
 
     //Create the grid to be used for logical operations

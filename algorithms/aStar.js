@@ -4,10 +4,10 @@ import { Grid } from "../grid.js";
 export class ASTAR {
     constructor(grid) {
         this.grid = grid;
-        for(var a = 0; a < grid.gridHeight; a++){
-            for(var b = 0; b < grid.gridWidth; b++){
-                this.grid.getNode(`${a}-${b}`).heuristic = grid.
-                calculateAstarHeuristic(`${a}-${b}`)
+        for (var a = 0; a < grid.gridHeight; a++) {
+            for (var b = 0; b < grid.gridWidth; b++) {
+                this.grid.getNode(`${a}-${b}`).heuristic =
+                    grid.calculateAstarHeuristic(`${a}-${b}`);
             }
         }
         this.current = null; //The current node in coordinate form
@@ -39,12 +39,12 @@ export class ASTAR {
             var bestIndex = 0;
             for (var a = 0; a < this.fringe.length; a++) {
                 if (
-                    this.grid.getDistance(this.grid.startId, this.fringe[a]) <
+                    this.grid.getDistance(this.fringe[a], this.grid.goalId) <
                     bestDistance
                 ) {
                     bestDistance = this.grid.getDistance(
-                        this.grid.startId,
-                        this.fringe[a]
+                        this.fringe[a],
+                        this.grid.goalId
                     );
                     bestIndex = a;
                 }
@@ -58,7 +58,7 @@ export class ASTAR {
                 this.current[0] == this.grid.goalId[0] &&
                 this.current[1] == this.grid.goalId[1]
             ) {
-                foundGoal = true
+                foundGoal = true;
                 break;
             }
             if (

@@ -4,10 +4,10 @@ import { Grid } from "../grid.js";
 export class GREEDY {
     constructor(grid) {
         this.grid = grid;
-        for(var a = 0; a < grid.gridHeight; a++){
-            for(var b = 0; b < grid.gridWidth; b++){
-                this.grid.getNode(`${a}-${b}`).heuristic = grid.
-                calculateAstarHeuristic(`${a}-${b}`)
+        for (var a = 0; a < grid.gridHeight; a++) {
+            for (var b = 0; b < grid.gridWidth; b++) {
+                this.grid.getNode(`${a}-${b}`).heuristic =
+                    grid.calculateAstarHeuristic(`${a}-${b}`);
             }
         }
         this.current = null; //The current node in coordinate form
@@ -26,6 +26,7 @@ export class GREEDY {
     findGoal() {
         this.expanded = [];
         this.fringe = [this.grid.startId];
+        this.current = this.grid.startId;
         var foundGoal = false;
 
         while (true) {
@@ -38,14 +39,8 @@ export class GREEDY {
             var bestDistance = Number.MAX_SAFE_INTEGER;
             var bestIndex = 0;
             for (var a = 0; a < this.fringe.length; a++) {
-                if (
-                    this.grid.getDistance(this.grid.startId, this.fringe[a]) <
-                    bestDistance
-                ) {
-                    bestDistance = this.grid.getDistance(
-                        this.grid.startId,
-                        this.fringe[a]
-                    );
+                if (this.grid.getHeuristic(this.fringe[a]) < bestDistance) {
+                    bestDistance = this.grid.getHeuristic(this.fringe[a]);
                     bestIndex = a;
                 }
             }
@@ -58,7 +53,7 @@ export class GREEDY {
                 this.current[0] == this.grid.goalId[0] &&
                 this.current[1] == this.grid.goalId[1]
             ) {
-                foundGoal = true
+                foundGoal = true;
                 break;
             }
             if (
