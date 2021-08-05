@@ -15,14 +15,6 @@ export class ASTAR {
         this.expanded = []; // List of coordinates
     }
 
-    getCurrent() {
-        return this.current;
-    }
-
-    setCurrent(current) {
-        this.current = current;
-    }
-
     findGoal() {
         this.expanded = [];
         this.fringe = [this.grid.startId];
@@ -39,12 +31,11 @@ export class ASTAR {
             var bestIndex = 0;
             for (var a = 0; a < this.fringe.length; a++) {
                 if (
-                    this.grid.getDistance(this.fringe[a], this.grid.goalId) <
+                    this.grid.getDistance(this.fringe[a]) <
                     bestDistance
                 ) {
                     bestDistance = this.grid.getDistance(
-                        this.fringe[a],
-                        this.grid.goalId
+                        this.fringe[a]
                     );
                     bestIndex = a;
                 }

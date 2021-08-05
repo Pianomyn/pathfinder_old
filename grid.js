@@ -60,11 +60,10 @@ export class Grid {
         return this.getNode(targetId).heuristic;
     }
 
-    getDistance(startId, endId) {
-        var startCell = this.getNode(startId);
-        var endCell = this.getNode(endId);
+    getDistance(targetId) {
+        var target = this.getNode(targetId);
 
-        return startCell.distanceTravelled + endCell.weight + endCell.heuristic;
+        return target.distanceTravelled + target.weight + target.heuristic;
     }
 
     //Create the grid to be used for logical operations
@@ -84,17 +83,17 @@ export class Grid {
     setNeighbors() {
         for (var row = 0; row < this.grid.length; row++) {
             for (var col = 0; col < this.grid[0].length; col++) {
-                if (row - 1 >= 0) {
-                    this.grid[row][col].addNeighbor([row - 1, col]);
-                }
-                if (row + 1 < this.grid.length) {
-                    this.grid[row][col].addNeighbor([row + 1, col]);
-                }
                 if (col - 1 >= 0) {
                     this.grid[row][col].addNeighbor([row, col - 1]);
                 }
                 if (col + 1 < this.grid[0].length) {
                     this.grid[row][col].addNeighbor([row, col + 1]);
+                }
+                if (row - 1 >= 0) {
+                    this.grid[row][col].addNeighbor([row - 1, col]);
+                }
+                if (row + 1 < this.grid.length) {
+                    this.grid[row][col].addNeighbor([row + 1, col]);
                 }
             }
         }

@@ -127,7 +127,7 @@ startButton.onclick = async () => {
         }
         //A Star
         if (algorithm == "aStar") {
-            alglorithm = new ASTAR(grid);
+            algorithm = new ASTAR(grid);
             expandedCoords = algorithm.findGoal();
             path = algorithm.getPath();
             delay = 40;
